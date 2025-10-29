@@ -1,6 +1,6 @@
 package com.carterdboyle.store;
 
-import com.carterdboyle.store.entities.Address;
+import com.carterdboyle.store.entities.Profile;
 import com.carterdboyle.store.entities.User;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -16,15 +16,16 @@ public class StoreApplication {
                 .email("carter@example.com")
                 .build();
 
-        var address = Address.builder()
-                .street("street")
-                .city("city")
-                .state("state")
-                .zip("zip")
-                .build();
+        var profile = Profile.builder()
+                        .bio("bio")
+                        .build();
 
-        user.addAddress(address);
+        user.setProfile(profile);
+        profile.setUser(user);
+
+        user.addTag("tag1");
         System.out.println(user);
+
     }
 
 }

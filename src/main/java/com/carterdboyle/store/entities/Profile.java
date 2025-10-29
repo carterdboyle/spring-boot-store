@@ -1,16 +1,15 @@
 package com.carterdboyle.store.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@ToString
 @Table(name="profiles")
 public class Profile {
     @Id
@@ -29,4 +28,11 @@ public class Profile {
     @Column(name = "loyalty_points")
     private String loyaltyPoints;
 
+    @OneToOne
+    @JoinColumn(name = "id")
+    @MapsId
+    @ToString.Exclude
+    // tells hibernate to use the same thing
+    // for the primary key and the foreign key
+    private User user;
 }
