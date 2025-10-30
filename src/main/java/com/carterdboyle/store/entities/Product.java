@@ -1,14 +1,17 @@
 package com.carterdboyle.store.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "products")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +27,12 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public void addCategory(Category category) {
+        this.category = category;
+        category.getProducts().add(this);
+    }
 }

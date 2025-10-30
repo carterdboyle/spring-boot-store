@@ -43,7 +43,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {
                     CascadeType.PERSIST,
                     CascadeType.REMOVE
-            })
+            },
+            orphanRemoval = true
+    )
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
@@ -55,6 +57,10 @@ public class User {
     )
     @Builder.Default
     private Set<Product> wishlist = new HashSet<>();
+
+     //Comment out to remove relationship
+     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+     private Profile profile;
 
     public void addTag(String tagName) {
         var tag = new Tag(tagName);
@@ -72,9 +78,8 @@ public class User {
         address.setUser(null);
     }
 
-     //Comment out to remove relationship
-     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-     private Profile profile;
-
+    public void addToWishlist(Product product) {
+        wishlist.add(product);
+    }
 
 }
