@@ -69,6 +69,9 @@ public class User {
         address.setUser(null);
     }
 
-    @OneToOne(mappedBy = "user")
-    private Profile profile;
+    // Comment out to remove relationship
+    //    @OneToOne(mappedBy = "user")
+    //    private Profile profile;
+
+
 }

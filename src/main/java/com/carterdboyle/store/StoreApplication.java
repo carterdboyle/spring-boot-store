@@ -1,30 +1,16 @@
 package com.carterdboyle.store;
 
-import com.carterdboyle.store.entities.Profile;
-import com.carterdboyle.store.entities.User;
+import com.carterdboyle.store.services.UserService;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.math.BigDecimal;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class StoreApplication {
 
     static void main(String[] args) {
-//        SpringApplication.run(StoreApplication.class, args);
-
-        var user = User.builder()
-                .name("Carter")
-                .password("password")
-                .email("carter@example.com")
-                .build();
-
-        var profile = Profile.builder()
-                        .bio("bio")
-                        .build();
-
-        user.setProfile(profile);
-        profile.setUser(user);
-
+        ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
+        var service = context.getBean(UserService.class);
+        service.showRelatedEntities();
     }
-
 }
