@@ -40,7 +40,7 @@ public class User {
     @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
@@ -69,9 +69,9 @@ public class User {
         address.setUser(null);
     }
 
-    // Comment out to remove relationship
-    //    @OneToOne(mappedBy = "user")
-    //    private Profile profile;
+     //Comment out to remove relationship
+     @OneToOne(mappedBy = "user")
+     private Profile profile;
 
 
 }
