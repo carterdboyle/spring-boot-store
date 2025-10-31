@@ -1,5 +1,6 @@
 package com.carterdboyle.store.services;
 
+import com.carterdboyle.store.dtos.UserSummary;
 import com.carterdboyle.store.entities.Address;
 import com.carterdboyle.store.entities.User;
 import com.carterdboyle.store.repositories.AddressRepository;
@@ -9,6 +10,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -89,5 +92,12 @@ public class UserService {
             System.out.println(u);
             u.getAddresses().forEach(System.out::println);
         });
+    }
+
+    @Transactional
+    public void fetchProfilesWithPointsAbove() {
+        List<UserSummary> users = userRepository
+                .findLoyalUsers(2);
+        users.forEach(u -> System.out.println(u.getId() + ": " + u.getEmail()));
     }
 }

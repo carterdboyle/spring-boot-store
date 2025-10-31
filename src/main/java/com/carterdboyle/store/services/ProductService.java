@@ -1,15 +1,19 @@
 package com.carterdboyle.store.services;
 
+import com.carterdboyle.store.dtos.UserSummary;
 import com.carterdboyle.store.entities.Category;
 import com.carterdboyle.store.entities.Product;
+import com.carterdboyle.store.entities.Profile;
 import com.carterdboyle.store.repositories.CategoryRepository;
 import com.carterdboyle.store.repositories.ProductRepository;
+import com.carterdboyle.store.repositories.ProfileRepository;
 import com.carterdboyle.store.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -17,6 +21,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
 
     public void persistRelated() {
         var product = Product.builder()

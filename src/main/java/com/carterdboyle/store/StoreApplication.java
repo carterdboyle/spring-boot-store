@@ -11,7 +11,7 @@ public class StoreApplication {
 
     static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
-        var service = context.getBean(ProductService.class);
-        service.fetchProducts();
+        var service = context.getBean(UserService.class);
+        service.fetchProfilesWithPointsAbove();
     }
 }
