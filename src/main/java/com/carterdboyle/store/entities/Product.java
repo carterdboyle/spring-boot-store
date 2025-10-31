@@ -1,7 +1,9 @@
 package com.carterdboyle.store.entities;
 
+import com.carterdboyle.store.dtos.ProductDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.mapstruct.Mapping;
 
 import java.math.BigDecimal;
 
