@@ -30,15 +30,6 @@ public class User {
     @Column(name="password")
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name="user_tags",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="tag_id")
-    )
-    @Builder.Default
-    private Set<Tag> tags = new HashSet<>();
-
     @OneToMany(mappedBy = "user", cascade = {
                     CascadeType.PERSIST,
                     CascadeType.REMOVE
@@ -61,11 +52,6 @@ public class User {
      @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
      private Profile profile;
 
-    public void addTag(String tagName) {
-        var tag = new Tag(tagName);
-        tags.add(tag);
-        tag.getUsers().add(this);
-    }
 
     public void addAddress(Address address) {
         addresses.add(address);
