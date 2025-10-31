@@ -15,7 +15,6 @@ import java.util.Set;
 @Table(name = "users")
 @NoArgsConstructor
 @Builder
-@ToString
 public class User {
     @Id
     @Column(name = "id")
@@ -82,4 +81,11 @@ public class User {
         wishlist.add(product);
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "name = " + name + ", " +
+                "email = " + email + ")";
+    }
 }
