@@ -5,11 +5,13 @@ import com.carterdboyle.store.dtos.UserDto;
 import com.carterdboyle.store.mappers.UserMapper;
 import com.carterdboyle.store.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -19,8 +21,13 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public List<UserDto> getAllUsers() {
-       return userRepository.findAll()
+    public List<UserDto> getAllUsers(
+            @RequestParam(name = "sort", defaultValue = "name", required = false) String sortBy
+    ) {
+        if (!Set.of("name", "email").contains(sortBy))
+            sortBy = "name";
+
+       return userRepository.findAll(Sort.by(sortBy))
                .stream()
                .map(userMapper::toDto)
                .toList();

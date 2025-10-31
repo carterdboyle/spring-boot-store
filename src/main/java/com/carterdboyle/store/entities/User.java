@@ -49,8 +49,8 @@ public class User {
     private Set<Product> wishlist = new HashSet<>();
 
      //Comment out to remove relationship
-     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-     private Profile profile;
+//     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+//     private Profile profile;
 
 
     public void addAddress(Address address) {
