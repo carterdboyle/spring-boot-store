@@ -1,5 +1,7 @@
 package com.carterdboyle.store.repositories;
 
+import com.carterdboyle.store.dtos.ProductSummary;
+import com.carterdboyle.store.dtos.ProductSummaryDto;
 import com.carterdboyle.store.entities.Category;
 import com.carterdboyle.store.entities.Product;
 import org.springframework.data.jpa.repository.Modifying;
@@ -63,5 +65,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     @Query("update Product p set p.price = :newPrice where p.category.id = :categoryId")
     void updatePriceByCategory(@Param("newPrice") BigDecimal newPrice, @Param("categoryId") Byte categoryId);
 
-    List<Product> findByCategory(Category category);
+    @Query("select p.id, p.name from Product p where p.category = :category")
+    List<ProductSummaryDto> findByCategory(@Param("category") Category category);
 }
