@@ -9,8 +9,7 @@ import com.carterdboyle.store.repositories.UserRepository;
 import com.carterdboyle.store.repositories.specifications.ProductSpec;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -105,6 +104,41 @@ public class ProductService {
         if (maxPrice != null) {
             spec = spec.and(ProductSpec.hasPriceLessThanOrEqualTo(maxPrice));
         }
+
+        productRepository.findAll(spec).forEach(System.out::println);
+    }
+
+    public void fetchSortedProducts() {
+        var sort = Sort.by("name").and(
+                Sort.by("price").descending()
+        );
+
+        productRepository.findAll(sort).forEach(System.out::println);
+    }
+
+    public void fetchPaginatedProducts(int pageNumber, int size) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, size);
+        Page<Product> page = productRepository.findAll(pageRequest);
+
+        var products = page.getContent();
+        products.forEach(System.out::println);
+
+        var totalPages = page.getTotalPages();
+        var totalElements = page.getTotalElements();
+        System.out.println("Total pages: " + totalPages);
+        System.out.println("Total elements: " + totalElements);
+    }
+
+    public void fetchProductsByCategoryCriteria() {
+        var category = categoryRepository.findById((byte) 1).orElseThrow();
+        var products = productRepository.findProductsByCriteria(category);
+        products.forEach(System.out::println);
+    }
+
+    public void fetchProductsBySpecification(Category category) {
+        Specification<Product> spec = Specification.allOf();
+
+        spec = spec.and(ProductSpec.hasCategory(category));
 
         productRepository.findAll(spec).forEach(System.out::println);
     }

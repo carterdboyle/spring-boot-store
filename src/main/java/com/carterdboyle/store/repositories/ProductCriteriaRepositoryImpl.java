@@ -1,5 +1,6 @@
 package com.carterdboyle.store.repositories;
 
+import com.carterdboyle.store.entities.Category;
 import com.carterdboyle.store.entities.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -38,6 +39,20 @@ public class ProductCriteriaRepositoryImpl implements ProductCriteriaRepository 
         }
 
         cq.select(root).where(predicates.toArray(new Predicate[predicates.size()]));
+
+        return entityManager.createQuery(cq).getResultList();
+    }
+
+    @Override
+    public List<Product> findProductsByCriteria(Category category) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+
+        Root<Product> root = cq.from(Product.class);
+
+        if (category != null) {
+            cq.select(root).where(cb.equal(root.get("category"), category));
+        }
 
         return entityManager.createQuery(cq).getResultList();
     }

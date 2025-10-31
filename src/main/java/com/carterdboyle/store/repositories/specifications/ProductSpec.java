@@ -1,5 +1,6 @@
 package com.carterdboyle.store.repositories.specifications;
 
+import com.carterdboyle.store.entities.Category;
 import com.carterdboyle.store.entities.Product;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -16,6 +17,10 @@ public class ProductSpec {
 
     public static Specification<Product> hasPriceLessThanOrEqualTo(BigDecimal price) {
         return (root, query, cb) -> cb.lessThanOrEqualTo(root.get("price"), price);
+    }
+
+    public static Specification<Product> hasCategory(Category category) {
+        return (root, query, cb) -> cb.equal(root.get("category"), category);
     }
 }
 
