@@ -12,6 +12,6 @@ public class StoreApplication {
     static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
         var service = context.getBean(UserService.class);
-        service.fetchUser();
+        service.fetchUsers();
     }
 }
