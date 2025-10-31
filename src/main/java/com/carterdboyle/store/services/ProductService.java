@@ -1,15 +1,15 @@
 package com.carterdboyle.store.services;
 
-import com.carterdboyle.store.dtos.UserSummary;
 import com.carterdboyle.store.entities.Category;
 import com.carterdboyle.store.entities.Product;
-import com.carterdboyle.store.entities.Profile;
 import com.carterdboyle.store.repositories.CategoryRepository;
 import com.carterdboyle.store.repositories.ProductRepository;
 import com.carterdboyle.store.repositories.ProfileRepository;
 import com.carterdboyle.store.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -71,7 +71,21 @@ public class ProductService {
 
     @Transactional
     public void fetchProducts() {
-        var products = productRepository.findProducts(BigDecimal.valueOf(1), BigDecimal.valueOf(15));
+        var product = new Product();
+        product.setName("Product");
+
+        var matcher = ExampleMatcher.matching()
+                .withIgnorePaths("id", "description")
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+
+        var example = Example.of(product, matcher);
+        var products = productRepository.findAll(example);
+        products.forEach(System.out::println);
+    }
+
+    public void fetchProductsByCriteria() {
+        var products = productRepository.findProductsByCriteria("prod", BigDecimal.valueOf(1), null);
         products.forEach(System.out::println);
     }
 }
