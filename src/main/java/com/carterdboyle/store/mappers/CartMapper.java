@@ -1,10 +1,16 @@
 package com.carterdboyle.store.mappers;
 
 import com.carterdboyle.store.dtos.CartDto;
+import com.carterdboyle.store.dtos.CartItemDto;
 import com.carterdboyle.store.entities.Cart;
+import com.carterdboyle.store.entities.CartItem;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CartMapper {
     CartDto toDto(Cart cart);
+
+    @Mapping(target = "totalPrice", expression = "java(cartItem.getTotalPrice())")
+    CartItemDto toDto(CartItem cartItem);
 }
