@@ -1,9 +1,7 @@
 package com.carterdboyle.store.entities;
 
-import com.carterdboyle.store.dtos.ProductDto;
 import jakarta.persistence.*;
 import lombok.*;
-import org.mapstruct.Mapping;
 
 import java.math.BigDecimal;
 
@@ -36,5 +34,17 @@ public class Product {
     public void addCategory(Category category) {
         this.category = category;
         category.getProducts().add(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Product " +
+            "[id=" + id
+                + ", name=" + name
+                + ", description=" + description
+                + ", price=" + price
+                + ", category=" + category.getName();
+
+
     }
 }
