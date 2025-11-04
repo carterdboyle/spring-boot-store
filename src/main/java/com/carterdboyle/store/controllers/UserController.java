@@ -110,19 +110,4 @@ public class UserController {
 
         return ResponseEntity.ok(userMapper.toDto(user));
     }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    // "name": "Name is required"
-    // Map<String, String>
-    public ResponseEntity<Map<String, String>> handleValidationErrors(
-            MethodArgumentNotValidException ex
-    ) {
-        var errors = new HashMap<String, String>();
-
-        ex.getBindingResult().getFieldErrors().forEach(error -> {
-            errors.put(error.getField(), error.getDefaultMessage());
-        });
-
-        return ResponseEntity.badRequest().body(errors);
-    }
 }
