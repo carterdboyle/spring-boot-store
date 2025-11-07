@@ -1,5 +1,6 @@
 package com.carterdboyle.store.controllers;
 
+import com.carterdboyle.store.config.JwtConfig;
 import com.carterdboyle.store.dtos.JwtResponse;
 import com.carterdboyle.store.dtos.LoginRequest;
 import com.carterdboyle.store.dtos.UserDto;
@@ -26,6 +27,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final JwtConfig jwtConfig;
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request,
@@ -44,7 +46,7 @@ public class AuthController {
         var cookie = new Cookie("refreshToken", refreshToken);
         cookie.setHttpOnly(true);
         cookie.setPath("/auth/refresh");
-        cookie.setMaxAge(604800); // 7d
+        cookie.setMaxAge(jwtConfig.getRefreshTokenExpiration()); // 7d
         cookie.setSecure(true);
         response.addCookie(cookie);
 
