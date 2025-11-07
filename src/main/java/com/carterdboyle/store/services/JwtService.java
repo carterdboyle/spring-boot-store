@@ -1,6 +1,7 @@
 package com.carterdboyle.store.services;
 
 import com.carterdboyle.store.config.JwtConfig;
+import com.carterdboyle.store.entities.Role;
 import com.carterdboyle.store.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -54,5 +55,9 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
 
+    }
+
+    public Role getRoleFromToken(String token) {
+        return Role.valueOf(getClaims(token).get("role", String.class));
     }
 }
